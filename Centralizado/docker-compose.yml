@@ -1,0 +1,52 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+
+  producer_python_logs:
+    build: ./producer_python_logs
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  consumer_python_logger:
+    build: ./consumer_python_logger
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  producer_node_orders:
+    build: ./producer_node_orders
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  consumer_java_billing:
+    build: ./consumer_java_billing
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  producer_java_metrics:
+    build: ./producer_java_metrics
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  consumer_node_dashboard:
+    build: ./consumer_node_dashboard
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  producer_node_alerts:
+    build: ./producer_node_alerts
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  consumer_python_alerts:
+    build: ./consumer_python_alerts
+    depends_on:
+      rabbitmq:
+        condition: service_healthy

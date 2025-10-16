@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  producer_python_logs:
+    build: ./producer_python_logs
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  consumer_python_logger:
+    build: ./consumer_python_logger
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  producer_node_orders:
+    build: ./producer_node_orders
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  consumer_java_billing:
+    build: ./consumer_java_billing
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  producer_java_metrics:
+    build: ./producer_java_metrics
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  consumer_node_dashboard:
+    build: ./consumer_node_dashboard
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  producer_node_alerts:
+    build: ./producer_node_alerts
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+  consumer_python_alerts:
+    build: ./consumer_python_alerts
+    environment:
+      - RABBIT_HOST=10.6.101.166
+    networks:
+      - rabbitnet
+
+networks:
+  rabbitnet:
+    external: true
